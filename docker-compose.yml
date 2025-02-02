@@ -1,0 +1,58 @@
+# docker-compose.yml
+version: '3.8'
+
+services:
+  nginx:
+    image: nginx:stable-alpine  # Используем облегчённую версию
+    ports:
+      - "80:80"
+    volumes:
+      - ./:/var/www/html
+      - ./docker/nginx/conf.d:/etc/nginx/conf.d
+    depends_on:
+      - php
+    networks:
+      - app-network
+    # Ограничиваем ресурсы
+    deploy:
+      resources:
+        limits:
+          memory: 128M
+
+  php:
+    build:
+      context: ./docker/php
+      dockerfile: Dockerfile
+    volumes:
+      - ./:/var/www/html
+    networks:
+      - app-network
+    deploy:
+      resources:
+        limits:
+          memory: 256M  # Учитывая ваш 1GB RAM
+
+  mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}  # Будем использовать переменные окружения
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - app-network
+    deploy:
+      resources:
+        limits:
+          memory: 384M  # MySQL нужно больше памяти
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  mysql_data:

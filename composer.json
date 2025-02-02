@@ -1,0 +1,16 @@
+{
+    "name": "omargaly/hackeevo-project",
+    "description": "Simple project for testing deployment",
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Omargaly Bitebayev",
+            "email": "omargaly.rs@gmail.com"
+        }
+    ],
+    "require": {}
+}
