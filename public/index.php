@@ -1,18 +1,19 @@
 <?php
 
-use App\Router\Router;
+
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
+use Dotenv\Dotenv;
+
 // Загружаем переменные окружения
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/..');
+$dotenv = Dotenv::createImmutable(__DIR__ . '/..');
 $dotenv->load();
 
-// Создаём экземпляр маршрутизатора
-$router = new Router();
+set_error_handler(/**
+ * @throws ErrorException
+ */ function ($severity, $message, $file, $line) {
+    throw new \ErrorException($message, $severity, $severity, $file, $line);
+});
 
-// Регистрируем маршруты
-$router->get('/', [App\Controller\HomeController::class, 'index']);
-
-// Запускаем приложение
-echo $router->dispatch($_SERVER['REQUEST_URI'], $_SERVER['REQUEST_METHOD']);
+require_once __DIR__ . '/../src/routes.php';
