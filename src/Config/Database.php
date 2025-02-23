@@ -1,5 +1,5 @@
 <?php
-namespace App\Core;
+namespace App\Config;
 
 use PDO;
 use PDOException;
@@ -39,11 +39,9 @@ class Database
 
     private function __construct()
     {
-
     }
 
     private function __clone()
     {
-
     }
 }
