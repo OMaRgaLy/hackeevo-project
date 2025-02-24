@@ -1,0 +1,192 @@
+{
+	"info": {
+		"_postman_id": "eb6ce1e2-3527-4980-a3be-3c0c4e398b75",
+		"name": "hackeevo-project-dev users",
+		"description": "# Task Management API - Users\n\nAPI для управления пользователями. Поддерживает создание (регистрацию), логин (авторизацию) с присвоением JWT Bearer Token, чтение и удаление пользователей.\n\n## Аутентификация\n\nВсе запросы к API (кроме регистрации и авторизации) требуют JWT токен в заголовке:  \n`Authorization: Bearer {{token}}`\n\n## Базовый URL\n\n{{baseUrl}}/api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20022333"
+	},
+	"item": [
+		{
+			"name": "/users (Get All Users)",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{baseUrl}}/users",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users"
+					]
+				},
+				"description": "Получение списка всех зарегистрированных пользователей\n\n## Параметры\n\nНе требуются\n\n### Пример ответа\n\n``` json\n{\n    \"success\": true,\n    \"data\": [\n        {\n            \"id\": 1,\n            \"nickname\": \"hAckeeVo\",\n            \"firstname\": \"Arikun\",\n            \"lastname\": \"Kerr\",\n            \"phone\": null,\n            \"email\": \"hackeevo@gmail.com\",\n            \"bio\": null,\n            \"role\": \"base\",\n            \"avatar\": null\n        }\n    ]\n}\n\n ```"
+			},
+			"response": []
+		},
+		{
+			"name": "/auth/register (Create User)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nickname\":\"hAckeeVo\",\r\n    \"firstname\":\"Arikun\",\r\n    \"lastname\":\"Kerr\",\r\n    \"email\":\"hackeevo@gmail.com\",\r\n    \"password\":\"password\"\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}/auth/register",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"auth",
+						"register"
+					]
+				},
+				"description": "Создание (регистрация) пользователя\n\n### Пример ответа\n\n``` json\n{\n    \"success\": true,\n    \"message\": \"Registration successful\",\n    \"token\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJlbWFpbCI6ImhhY2tlZXZvQGdtYWlsLmNvbSIsInJvbGUiOiJiYXNlIiwiZXhwIjoxNzQwNDMxMTg3LCJpYXQiOjE3NDAzNDQ3ODd9.jayWGIoDUUC1tq8M4cfLuvaI4rLcwjI_TsZ47PU8Un0\",\n    \"user\": {\n        \"id\": 1,\n        \"nickname\": \"hAckeeVo\",\n        \"email\": \"hackeevo@gmail.com\",\n        \"role\": \"base\"\n    }\n}{\n    \"success\": true,\n    \"data\": null\n}\n\n ```"
+			},
+			"response": []
+		},
+		{
+			"name": "/users/{id} (Get User By Id)",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{baseUrl}}/users/1",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						"1"
+					]
+				},
+				"description": "Получение информации о пользователе по Id пользователя\n\n## Параметры\n\nНе требуются\n\n### Пример ответа\n\n``` json\n{\n    \"success\": true,\n    \"data\": {\n        \"id\": 1,\n        \"nickname\": \"hAckeeVo\",\n        \"firstname\": \"Arikun\",\n        \"lastname\": \"Kerr\",\n        \"phone\": null,\n        \"email\": \"hackeevo@gmail.com\",\n        \"bio\": null,\n        \"role\": \"base\",\n        \"avatar\": null\n    }\n}\n\n ```"
+			},
+			"response": []
+		},
+		{
+			"name": "/users/{id} (Delete User By Id)",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://{{baseUrl}}/users/3",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						"3"
+					]
+				},
+				"description": "Удаление пользователя по Id пользователя\n\n## Параметры\n\nНе требуются\n\n### Пример ответа\n\n``` json\n{\n    \"success\": true,\n    \"data\": {\n        \"message\": \"User not found\"\n    }\n}\n\n ```"
+			},
+			"response": []
+		},
+		{
+			"name": "/auth/login (Login User)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\":\"hackeevo@gmail.com\",\r\n    \"password\":\"password\"\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}/auth/login",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"auth",
+						"login"
+					]
+				},
+				"description": "Авторизация пользователя с присвоением JWT токена\n\n### Пример ответа:\n\n``` json\n{\n    \"success\": true,\n    \"message\": \"Login successful\",\n    \"token\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJlbWFpbCI6ImhhY2tlZXZvQGdtYWlsLmNvbSIsInJvbGUiOiJiYXNlIiwiZXhwIjoxNzQwNDM3OTczLCJpYXQiOjE3NDAzNTE1NzN9.dvzzx0e49pmCVGvSXrVjWsWXacSygUlNgD2Vvh-11ng\",\n    \"user\": {\n        \"id\": 1,\n        \"nickname\": \"hAckeeVo\",\n        \"email\": \"hackeevo@gmail.com\",\n        \"role\": \"base\"\n    }\n}{\n    \"success\": true,\n    \"data\": null\n}\n\n ```"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "{{baseUrl}}",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "{{token}}",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
